@@ -62,6 +62,11 @@ export const siteWideContent = {
         label: "Pricing",
       },
     ] satisfies CtaLink[],
+    showcase: [
+      { href: "#demos", label: "Demos" },
+      { href: "#features", label: "Features" },
+      { href: "#faqs", label: "FAQs" },
+    ] satisfies CtaLink[],
   },
   social: {
     followPrefix: "Follow us on",
