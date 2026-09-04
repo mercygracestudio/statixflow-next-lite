@@ -1,0 +1,37 @@
+{
+  "name": "StatixFlow Lite Next.js",
+  "version": "0.1.0",
+  "description": "StatixFlow is a premium, ultra-modern Next.js App Router template engineered with Tailwind CSS v4. Crafted specifically for corporate startups and forward-thinking agencies, it offers a robust toolkit of pre-built UI components. This comprehensive foundation empowers you to launch sleek, scalable web applications with maximum speed and efficiency.",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@next/third-parties": "^16.3.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "gsap": "^3.15.0",
+    "lucide-react": "^1.31.0",
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "swiper": "^14.1.0",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.1",
+    "prettier": "^3.9.6",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
