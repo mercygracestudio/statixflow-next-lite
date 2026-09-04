@@ -1,34 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Free Tailwind CSS landing page template (Next.js v16)
 
-## Getting Started
+StatixFlow Next Lite is a no-cost Next.js template built on Tailwind CSS v4, featuring a hand-picked selection of hand-coded core components that are clean, accessible, and W3C-compliant. Use it to test-drive StatixFlow's build quality before stepping up to the [full SaaS template](https://statixflow-next.mercygrace.studio/).
 
-First, run the development server:
+Built and maintained with ❤️ by [Mercy Grace Studio](https://mercygrace.studio/).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Live preview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Take a look at the live preview 👉️ [https://statixflow-next-lite.mercygrace.studio/](https://statixflow-next-lite.mercygrace.studio/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Upgrade to Pro
 
-## Learn More
+Explore the pro edition here 👉️ [https://statixflow-next.mercygrace.studio/](https://statixflow-next.mercygrace.studio/)
 
-To learn more about Next.js, take a look at the following resources:
+## License and usage terms
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Distributed under the [GPL license](https://www.gnu.org/licenses/gpl-3.0.html).
+- © 2026 [Mercy Grace Studio](https://mercygrace.studio/). All rights reserved.
+- Free to use in personal and commercial work — just don't republish, redistribute, or resell the template itself.
+- No attribution required, but always welcome.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Keep up with updates
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Want to hear about new releases? Sign up for our [newsletter](https://mercygrace.studio/).
