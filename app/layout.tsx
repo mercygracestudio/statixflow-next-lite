@@ -1,8 +1,5 @@
 import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
-// marketplace-strip-start
-import { GoogleTagManager } from "@next/third-parties/google";
-// marketplace-strip-end
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
@@ -21,9 +18,6 @@ export default function RootLayout({
       className={`${instrumentSans.variable} gsap-intro-pending`}
     >
       <body>{children}</body>
-      {/* marketplace-strip-start */}
-      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID || ""} />
-      {/* marketplace-strip-end */}
     </html>
   );
 }

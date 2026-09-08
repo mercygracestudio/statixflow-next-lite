@@ -36,9 +36,6 @@ yarn-error.log*
 # vercel
 .vercel
 
-# marketplace distribution build
-/marketplace-dist
-
 # typescript
 *.tsbuildinfo
 next-env.d.ts
