@@ -149,7 +149,10 @@ export const siteWideContent = {
       },
     ] satisfies FooterLinkColumn[],
     showcaseLinks: [
-      { href: "https://statixflow-docs.mercygrace.studio/", label: "Docs" },
+      {
+        href: "https://statixflow-next-docs.mercygrace.studio/",
+        label: "Docs",
+      },
       { href: "https://mercygrace.studio/support", label: "Help Center" },
     ] satisfies CtaLink[],
   },

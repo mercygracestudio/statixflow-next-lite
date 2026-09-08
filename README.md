@@ -8,6 +8,10 @@ Built and maintained with ❤️ by [Mercy Grace Studio](https://mercygrace.stud
 
 Take a look at the live preview 👉️ [https://statixflow-next-lite.mercygrace.studio/](https://statixflow-next-lite.mercygrace.studio/)
 
+## Getting started
+
+Head to the [documentation](https://statixflow-next-docs.mercygrace.studio/) for setup instructions for StatixFlow Next Lite.
+
 ## Upgrade to Pro
 
 Explore the pro edition here 👉️ [https://statixflow-next.mercygrace.studio/](https://statixflow-next.mercygrace.studio/)
