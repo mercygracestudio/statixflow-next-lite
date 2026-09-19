@@ -1,5 +1,5 @@
 import type { ArticleApproachStep } from "@/content/types";
-import { Eyebrow } from "../ui/eyebrow";
+import { Eyebrow } from "../atoms/eyebrow";
 import { StepGrid } from "../molecules/step-grid";
 
 type StepsSectionProps = {

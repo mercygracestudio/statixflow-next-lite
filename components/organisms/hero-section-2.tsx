@@ -1,14 +1,16 @@
 import Image from "next/image";
 import type { ImageAsset } from "@/content/types";
-import { Button } from "../ui/button";
-import { LogoStrip } from "../ui/logo-strip";
+import { Button } from "../atoms/button";
+import { LogoStrip } from "../atoms/logo-strip";
 
 type HeroSection2Props = {
   backgroundImage: ImageAsset;
   heading: string;
   body: string;
   primaryCtaLabel: string;
+  primaryCtaHref: string;
   secondaryCtaLabel: string;
+  secondaryCtaHref: string;
   logos: ImageAsset[];
 };
 
@@ -17,7 +19,9 @@ export function HeroSection2({
   heading,
   body,
   primaryCtaLabel,
+  primaryCtaHref,
   secondaryCtaLabel,
+  secondaryCtaHref,
   logos,
 }: HeroSection2Props) {
   return (
@@ -52,22 +56,26 @@ export function HeroSection2({
             data-page-intro-animation-move-up=""
           >
             <Button
-              href="#"
+              href={primaryCtaHref}
               label={primaryCtaLabel}
-              className="bg-white px-6 py-3 text-base text-black"
+              variant="secondary"
+              target="_blank"
+              rel="noopener noreferrer"
             />
 
             <Button
-              href="#"
-              variant="link"
+              href={secondaryCtaHref}
+              variant="linkInverse"
               label={secondaryCtaLabel}
-              className="text-white"
+              target="_blank"
+              rel="noopener noreferrer"
             />
           </div>
 
           <LogoStrip
             logos={logos}
-            className="gap-6 opacity-80 sm:gap-12"
+            tone="solid"
+            density="tight"
             data-page-intro-animation-move-up=""
           />
         </div>

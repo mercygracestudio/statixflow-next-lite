@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <SiteShell footerVariant="full">
+    <SiteShell>
       <HeroSection2 {...homeContent.hero} />
 
       <StepsSection {...homeContent.mandate} />

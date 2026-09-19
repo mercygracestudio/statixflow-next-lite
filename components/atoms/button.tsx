@@ -1,6 +1,6 @@
 import { type ComponentPropsWithoutRef, type ReactNode } from "react";
-import { ChevronRight } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { HoverSlideIcon, HoverSlideText } from "./animated-link-label";
 import { cn } from "@/lib/cn";
 
 export const buttonVariants = cva(
@@ -10,8 +10,13 @@ export const buttonVariants = cva(
       variant: {
         primary: "bg-primary text-white",
         secondary: "bg-white text-black",
-        outline: "border border-current bg-transparent",
-        link: "bg-transparent",
+        /** Border tracks the label colour, so one text class retints both. */
+        outline: "border border-current bg-transparent text-primary",
+        /** Outline for dark surfaces, where nothing usable is inherited. */
+        outlineInverse: "border border-white/20 bg-transparent text-white",
+        link: "bg-transparent text-primary",
+        /** Link for dark surfaces, where nothing usable is inherited. */
+        linkInverse: "bg-transparent text-white",
       },
       size: {
         sm: "px-4 py-3 text-sm",
@@ -20,7 +25,11 @@ export const buttonVariants = cva(
       },
     },
     compoundVariants: [
-      { variant: "link", size: ["sm", "md", "lg"], class: "p-0" },
+      {
+        variant: ["link", "linkInverse"],
+        size: ["sm", "md", "lg"],
+        class: "p-0",
+      },
     ],
     defaultVariants: {
       variant: "primary",
@@ -28,6 +37,13 @@ export const buttonVariants = cva(
     },
   },
 );
+
+export type ButtonVariant = NonNullable<
+  VariantProps<typeof buttonVariants>["variant"]
+>;
+export type ButtonSize = NonNullable<
+  VariantProps<typeof buttonVariants>["size"]
+>;
 
 type ButtonOwnProps = VariantProps<typeof buttonVariants> & {
   label: string;
@@ -55,29 +71,13 @@ export function Button({
   const classes = cn(buttonVariants({ variant, size }), className);
 
   const iconNode = icon !== null && (
-    <span
-      className={cn(
-        "translate-x-0 transition-transform duration-300 ease-in-out",
-        iconPosition === "leading"
-          ? "group-hover:-translate-x-2"
-          : "group-hover:translate-x-2",
-      )}
-    >
-      {icon ?? <ChevronRight strokeWidth={1} className="size-4" />}
-    </span>
+    <HoverSlideIcon icon={icon ?? undefined} position={iconPosition} />
   );
 
   const content = (
     <>
       {iconPosition === "leading" && iconNode}
-      <span className="relative overflow-hidden">
-        <span className="relative block h-full translate-y-0 transition-transform duration-300 ease-in-out group-hover:-translate-y-full">
-          {label}
-        </span>
-        <span className="absolute top-0 left-0 block h-full translate-y-full transition-transform duration-300 ease-in-out group-hover:translate-y-0">
-          {label}
-        </span>
-      </span>
+      <HoverSlideText>{label}</HoverSlideText>
       {iconPosition === "trailing" && iconNode}
     </>
   );
@@ -95,7 +95,10 @@ export function Button({
   }
 
   return (
-    <button className={classes} {...(props as ComponentPropsWithoutRef<"button">)}>
+    <button
+      className={classes}
+      {...(props as ComponentPropsWithoutRef<"button">)}
+    >
       {content}
     </button>
   );

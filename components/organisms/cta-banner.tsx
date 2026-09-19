@@ -1,8 +1,34 @@
 import Image from "next/image";
+import { cva, type VariantProps } from "class-variance-authority";
 import type { CtaLink, ImageAsset } from "@/content/types";
-import { Button } from "../ui/button";
+import { Button, type ButtonVariant } from "../atoms/button";
 import { SectionHeading } from "../molecules/section-heading";
-import { ParallaxCoverImage } from "../ui/parallax-cover-image";
+import {
+  ParallaxCoverImage,
+  type ImageTreatment,
+} from "../atoms/parallax-cover-image";
+import { cn } from "@/lib/cn";
+
+/**
+ * Background and text colour are paired deliberately — a caller overriding only
+ * the background would otherwise inherit the wrong text colour.
+ */
+const panelVariants = cva(
+  "relative flex flex-col justify-center p-10 md:p-20",
+  {
+    variants: {
+      tone: {
+        primary: "bg-primary text-white",
+        accent: "bg-accent text-foreground",
+      },
+    },
+    defaultVariants: {
+      tone: "primary",
+    },
+  },
+);
+
+type PanelTone = NonNullable<VariantProps<typeof panelVariants>["tone"]>;
 
 type CtaBannerCircles = {
   variant?: "circles";
@@ -19,10 +45,10 @@ type CtaBannerImageVariant = {
   primaryCta: CtaLink;
   secondaryCta: CtaLink;
   image: ImageAsset;
-  imageClassName?: string;
-  panelClassName?: string;
-  primaryClassName?: string;
-  secondaryClassName?: string;
+  imageTreatment?: ImageTreatment;
+  panelTone?: PanelTone;
+  primaryVariant?: ButtonVariant;
+  secondaryVariant?: ButtonVariant;
   topOverlayClassName?: string;
   sectionClassName?: string;
   decorative?: boolean;
@@ -37,23 +63,26 @@ export function CtaBanner(props: CtaBannerCircles | CtaBannerImageVariant) {
       primaryCta,
       secondaryCta,
       image,
-      imageClassName = "absolute bottom-0 left-0 h-[170%] w-full object-cover object-center",
-      panelClassName = "bg-primary p-10 text-white md:p-20",
-      primaryClassName = "bg-white px-6 py-3 text-base text-black",
-      secondaryClassName = "border border-white/20 px-6 py-3 text-base text-white",
-      topOverlayClassName = "",
-      sectionClassName = "",
+      imageTreatment,
+      panelTone,
+      primaryVariant = "secondary",
+      secondaryVariant = "outlineInverse",
+      topOverlayClassName,
+      sectionClassName,
       decorative = false,
     } = props;
     return (
-      <section className={`relative ${sectionClassName}`.trim()}>
+      <section className={cn("relative", sectionClassName)}>
         <div
-          className={`absolute top-0 left-0 z-1 h-1/2 w-full ${topOverlayClassName}`.trim()}
+          className={cn(
+            "absolute top-0 left-0 z-1 h-1/2 w-full",
+            topOverlayClassName,
+          )}
         ></div>
 
         <div className="container mx-auto px-4">
           <div className="relative z-2 grid grid-cols-1 overflow-hidden rounded-2xl lg:grid-cols-2">
-            <div className={`relative flex flex-col justify-center ${panelClassName}`.trim()}>
+            <div className={panelVariants({ tone: panelTone })}>
               {decorative ? (
                 <figure className="absolute top-0 left-0 z-1 w-250 -translate-x-1/2 -translate-y-1/2">
                   <Image
@@ -68,11 +97,9 @@ export function CtaBanner(props: CtaBannerCircles | CtaBannerImageVariant) {
               ) : null}
 
               <div className="relative z-2">
-                <SectionHeading
-                  eyebrow={eyebrow}
-                  heading={heading}
-                  headingClassName="mb-8 text-4xl font-medium md:text-5xl"
-                />
+                <div className="mb-8">
+                  <SectionHeading eyebrow={eyebrow} heading={heading} />
+                </div>
                 <p
                   className="mb-10 max-w-sm text-lg leading-relaxed text-muted-foreground"
                   data-move-up-on-scroll=""
@@ -86,12 +113,12 @@ export function CtaBanner(props: CtaBannerCircles | CtaBannerImageVariant) {
                   <Button
                     href={primaryCta.href}
                     label={primaryCta.label}
-                    className={primaryClassName}
+                    variant={primaryVariant}
                   />
                   <Button
                     href={secondaryCta.href}
                     label={secondaryCta.label}
-                    className={secondaryClassName}
+                    variant={secondaryVariant}
                   />
                 </div>
               </div>
@@ -99,8 +126,8 @@ export function CtaBanner(props: CtaBannerCircles | CtaBannerImageVariant) {
 
             <ParallaxCoverImage
               image={image}
-              figureClassName="relative hidden lg:block"
-              className={imageClassName}
+              frame="bare"
+              treatment={imageTreatment}
             />
           </div>
         </div>
@@ -144,7 +171,9 @@ export function CtaBanner(props: CtaBannerCircles | CtaBannerImageVariant) {
             <Button
               href={cta.href}
               label={cta.label}
-              className="bg-primary px-6 py-3 text-base text-white"
+              {...(cta.href.startsWith("http")
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
               data-move-up-on-scroll=""
             />
           </div>

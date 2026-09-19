@@ -1,4 +1,5 @@
 import type { AccordionItem, QuoteSlide } from "./types";
+import { siteConfig } from "@/site.config";
 
 export interface ImageAsset {
   src: string;
@@ -28,8 +29,10 @@ export const homeContent = {
     } satisfies ImageAsset,
     heading: "Ship More. Profit always",
     body: "Use customer data to build great and solid product experiences that convert.",
-    primaryCtaLabel: "Start a free trial",
+    primaryCtaLabel: "Get pro version",
+    primaryCtaHref: siteConfig.purchaseUrl,
     secondaryCtaLabel: "Learn more",
+    secondaryCtaHref: siteConfig.purchaseUrl,
     logos: [
       { src: "/imgs/companies/dark/frequencii.svg", alt: "Frequencii", width: 177, height: 48 },
       { src: "/imgs/companies/dark/alt+shift.svg", alt: "Alt + Shift", width: 153, height: 48 },
@@ -150,7 +153,7 @@ export const homeContent = {
       heading: "Still looking for answers or need a good chat?",
       body: "If you don't see the answer to your question, send us a message and we will answer you as soon as possible, within a few hours.",
       ctaLabel: "Contact Us",
-      ctaHref: "#",
+      ctaHref: `${siteConfig.proSiteUrl}/contact/`,
     },
   },
   finalCta: {
@@ -162,7 +165,7 @@ export const homeContent = {
     } satisfies ImageAsset,
     heading: "Get started today",
     body: "You don’t need to overhaul the tools you already rely on. See how StatixFlow can streamline your workflows and give your team back up to 25% of their productive time every month.",
-    ctaLabel: "Start a free trial",
-    ctaHref: "#",
+    ctaLabel: "Get pro version",
+    ctaHref: siteConfig.purchaseUrl,
   },
 };

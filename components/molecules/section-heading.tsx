@@ -1,10 +1,12 @@
 import type { ReactNode } from "react";
-import { Eyebrow } from "../ui/eyebrow";
+import { Eyebrow } from "../atoms/eyebrow";
+import { cn } from "@/lib/cn";
 
 type SectionHeadingProps = {
   eyebrow?: ReactNode;
   heading: ReactNode | [string, string];
-  headingClassName?: string;
+  /** Wrap the heading onto even lines. */
+  balance?: boolean;
   /** Set false to omit the scroll-triggered unmask animation attribute (matches a couple of source instances that skip it). */
   animated?: boolean;
 };
@@ -12,7 +14,7 @@ type SectionHeadingProps = {
 export function SectionHeading({
   eyebrow,
   heading,
-  headingClassName = "text-4xl font-medium md:text-5xl",
+  balance = false,
   animated = true,
 }: SectionHeadingProps) {
   return (
@@ -23,7 +25,10 @@ export function SectionHeading({
         </Eyebrow>
       ) : null}
       <h2
-        className={headingClassName}
+        className={cn(
+          "text-4xl font-medium md:text-5xl",
+          balance && "text-balance",
+        )}
         {...(animated ? { "data-unmask-text-on-scroll": "" } : {})}
       >
         {Array.isArray(heading) ? (

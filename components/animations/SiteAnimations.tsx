@@ -10,7 +10,18 @@ import {
 } from "react";
 import { gsap, ScrollSmoother, ScrollTrigger, SplitText } from "@/lib/gsap";
 import { useSiteMotion } from "./SiteMotionProvider";
+import { headerDuration } from "./useHeaderAnimation";
 import { useRichMediaInteractions } from "./useRichMediaInteractions";
+
+const MEDIA_QUERIES = {
+  sm: "(min-width: 640px)",
+  md: "(min-width: 768px)",
+  lg: "(min-width: 1024px)",
+  xl: "(min-width: 1280px)",
+  "2xl": "(min-width: 1536px)",
+} as const;
+
+type PinnedScreen = keyof typeof MEDIA_QUERIES;
 
 function parseDataNumber(value: string | undefined, fallback: number) {
   const parsed = Number.parseFloat(value ?? "");
@@ -20,7 +31,7 @@ function parseDataNumber(value: string | undefined, fallback: number) {
 export function SiteAnimations({ children }: { children: ReactNode }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [fontsReady, setFontsReady] = useState(false);
-  const { smootherRef, scrollTo } = useSiteMotion();
+  const { headerRef, smootherRef, scrollTo } = useSiteMotion();
 
   useRichMediaInteractions(wrapperRef);
 
@@ -85,6 +96,7 @@ export function SiteAnimations({ children }: { children: ReactNode }) {
       const splitInstances: SplitText[] = [];
       const generatedAttributes: Array<[HTMLElement, string]> = [];
       const localTriggers: ScrollTrigger[] = [];
+      const localMatchMedia: gsap.MatchMedia[] = [];
 
       const markGenerated = (element: HTMLElement, key: string) => {
         element.dataset[key] = "true";
@@ -280,7 +292,7 @@ export function SiteAnimations({ children }: { children: ReactNode }) {
           });
         });
 
-      scope
+      document
         .querySelectorAll<HTMLElement>("[data-highlight-on-scroll]")
         .forEach((root) => {
           const links = Array.from(
@@ -289,7 +301,7 @@ export function SiteAnimations({ children }: { children: ReactNode }) {
           const pairs = links.flatMap((link) => {
             const id = link.hash.replace(/^#/, "");
             const heading = id
-              ? scope.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
+              ? document.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
               : null;
             return heading ? [{ link, heading }] : [];
           });
@@ -313,8 +325,60 @@ export function SiteAnimations({ children }: { children: ReactNode }) {
           });
         });
 
+      scope
+        .querySelectorAll<HTMLElement>("[data-pinned-side]")
+        .forEach((root) => {
+          const rootChild = root.firstElementChild as HTMLElement | null;
+          const rootParent = root.closest<HTMLElement>(
+            "[data-pinned-side-container]",
+          );
+          if (!rootChild || !rootParent) return;
+
+          const createAnimation = () => {
+            const header = headerRef.current;
+            const headerHeight = header?.offsetHeight ?? 0;
+            const rootTopPadding =
+              Number.parseFloat(window.getComputedStyle(root).paddingTop) || 0;
+            const childAnimation = gsap.to(rootChild, {
+              y: headerHeight - rootTopPadding,
+              paused: true,
+              duration: headerDuration,
+            });
+            const trigger = ScrollTrigger.create({
+              trigger: root,
+              start: "top top",
+              end: () => `+=${rootParent.offsetHeight - root.offsetHeight}`,
+              pin: true,
+              pinSpacing: false,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                const headerIsVisible =
+                  header?.classList.contains("is-visible") ?? false;
+                if (headerIsVisible && self.isActive) {
+                  childAnimation.play();
+                } else {
+                  childAnimation.reverse();
+                }
+              },
+            });
+            localTriggers.push(trigger);
+          };
+
+          const screen = root.dataset.pinnedSideScreen as
+            PinnedScreen | undefined;
+          const query = screen ? MEDIA_QUERIES[screen] : undefined;
+          if (query) {
+            const matchMedia = gsap.matchMedia();
+            matchMedia.add(query, createAnimation);
+            localMatchMedia.push(matchMedia);
+          } else {
+            createAnimation();
+          }
+        });
+
       return () => {
         localTriggers.forEach((trigger) => trigger.kill());
+        localMatchMedia.forEach((matchMedia) => matchMedia.revert());
         splitInstances.forEach((split) => split.revert());
         generatedAttributes.forEach(([element, key]) => {
           delete element.dataset[key];
@@ -323,7 +387,7 @@ export function SiteAnimations({ children }: { children: ReactNode }) {
     },
     {
       scope: wrapperRef,
-      dependencies: [fontsReady],
+      dependencies: [fontsReady, headerRef],
       revertOnUpdate: true,
     },
   );

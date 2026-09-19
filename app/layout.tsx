@@ -13,10 +13,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${instrumentSans.variable} gsap-intro-pending`}
-    >
+    <html lang="en" className={`${instrumentSans.variable} gsap-intro-pending`}>
       <body>{children}</body>
     </html>
   );

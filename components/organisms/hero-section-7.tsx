@@ -1,10 +1,8 @@
 import type { ReactNode } from "react";
-import { cn } from "@/lib/cn";
+import { Eyebrow } from "../atoms/eyebrow";
 
 export interface HeroSection7Props {
   badgeLabel: string;
-  badgePingClassName?: string;
-  badgeDotClassName?: string;
   heading: string;
   body: string;
   children?: ReactNode;
@@ -12,8 +10,6 @@ export interface HeroSection7Props {
 
 export function HeroSection7({
   badgeLabel,
-  badgePingClassName = "bg-rose-400/80",
-  badgeDotClassName = "bg-rose-500",
   heading,
   body,
   children,
@@ -32,22 +28,12 @@ export function HeroSection7({
             data-page-intro-animation-move-up=""
           >
             <span className="relative flex size-2">
-              <span
-                className={cn(
-                  "absolute inline-flex size-full animate-ping rounded-full",
-                  badgePingClassName,
-                )}
-              ></span>
-              <span
-                className={cn(
-                  "relative mx-auto inline-flex size-[90%] rounded-full",
-                  badgeDotClassName,
-                )}
-              ></span>
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-rose-400/80"></span>
+              <span className="relative mx-auto inline-flex size-[90%] rounded-full bg-rose-500"></span>
             </span>
-            <span className="text-xs font-medium tracking-widest text-white/50 uppercase">
+            <Eyebrow as="span" tone="inverse">
               {badgeLabel}
-            </span>
+            </Eyebrow>
           </div>
 
           <h1

@@ -11,7 +11,7 @@ export const notFoundContent = {
   },
   actions: {
     backLabel: "Previous page",
-    ctaHref: "/home",
+    ctaHref: "/",
     ctaLabel: "Return home",
   },
 };

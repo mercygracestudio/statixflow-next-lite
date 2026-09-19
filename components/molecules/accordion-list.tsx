@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 import type { AccordionItem } from "@/content/types";
-import { Accordion } from "../ui/accordion";
+import { Accordion } from "../atoms/accordion";
 import { cn } from "@/lib/cn";
 
 const dividerVariants = cva("", {

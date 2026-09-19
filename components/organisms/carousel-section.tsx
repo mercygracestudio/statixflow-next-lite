@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { QuoteSlide as QuoteSlideData } from "@/content/types";
+import { HoverSlideText } from "../atoms/animated-link-label";
 import { SectionHeading } from "../molecules/section-heading";
 import { QuoteSection1 } from "./quote-section-1";
 
@@ -36,15 +37,9 @@ export function CarouselSection({
               aria-label="Previous Slide"
               data-slider-btn="prev"
             >
-              <span className="relative overflow-hidden">
-                <span className="relative block h-full translate-y-0 transition-transform duration-300 ease-in-out group-hover:-translate-y-full">
-                  <ArrowLeft strokeWidth={1} className="size-4" />
-                </span>
-
-                <span className="absolute top-0 left-0 block h-full translate-y-full transition-transform duration-300 ease-in-out group-hover:translate-y-0">
-                  <ArrowLeft strokeWidth={1} className="size-4" />
-                </span>
-              </span>
+              <HoverSlideText>
+                <ArrowLeft strokeWidth={1} className="size-4" />
+              </HoverSlideText>
             </button>
 
             <div
@@ -57,15 +52,9 @@ export function CarouselSection({
               data-slider-btn="next"
               aria-label="Next Slide"
             >
-              <span className="relative overflow-hidden">
-                <span className="relative block h-full translate-y-0 transition-transform duration-300 ease-in-out group-hover:-translate-y-full">
-                  <ArrowRight strokeWidth={1} className="size-4" />
-                </span>
-
-                <span className="absolute top-0 left-0 block h-full translate-y-full transition-transform duration-300 ease-in-out group-hover:translate-y-0">
-                  <ArrowRight strokeWidth={1} className="size-4" />
-                </span>
-              </span>
+              <HoverSlideText>
+                <ArrowRight strokeWidth={1} className="size-4" />
+              </HoverSlideText>
             </button>
           </div>
         </div>

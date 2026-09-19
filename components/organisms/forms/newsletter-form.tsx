@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { Forward } from "lucide-react";
 import { Field } from "@/components/molecules/field";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/atoms/button";
 import { siteWideContent } from "@/content/site-wide";
 
 const { newsletterForm } = siteWideContent;
@@ -28,9 +28,8 @@ export function NewsletterForm({ variant }: { variant: "card" | "footer" }) {
           placeholder={newsletterForm.emailPlaceholder}
           value={email}
           onChange={setEmail}
-          unstyled
+          variant="underlineInverse"
           wrapperClassName="contents"
-          className="w-full border-b border-white/30 bg-transparent py-3 pr-8 text-sm text-white/80 placeholder-white/30 transition-colors duration-300 ease-in-out outline-none focus:border-white/80"
           trailing={
             <button
               className="absolute top-1/2 right-0 -translate-y-1/2 text-white/50 transition-colors hover:text-white"
@@ -59,16 +58,11 @@ export function NewsletterForm({ variant }: { variant: "card" | "footer" }) {
           placeholder={newsletterForm.emailPlaceholder}
           value={email}
           onChange={setEmail}
-          unstyled
+          variant="pill"
           wrapperClassName="w-full"
-          className="w-full rounded-full border border-border px-6 py-3 text-sm text-foreground placeholder-foreground/40 transition-colors duration-300 ease-in-out outline-none focus:border-black"
         />
 
-        <Button
-          type="submit"
-          label={newsletterForm.submitLabel}
-          className="bg-primary px-6 py-3 text-base text-white"
-        />
+        <Button type="submit" label={newsletterForm.submitLabel} />
       </div>
       <p className="text-xs text-muted-foreground">{newsletterForm.consent}</p>
     </form>

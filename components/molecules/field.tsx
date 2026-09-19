@@ -1,9 +1,39 @@
 import type { ReactNode } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/cn";
 
 type FieldControl = "input" | "textarea" | "select";
 
-type FieldProps = {
+/**
+ * The three control skins the site uses. They are alternative surfaces rather
+ * than a base plus tweaks — a pill and an underline would fight.
+ */
+const controlVariants = cva("w-full py-3 outline-none", {
+  variants: {
+    variant: {
+      underline:
+        "border-b border-border bg-transparent text-base transition-all focus:border-primary",
+      /** The footer newsletter: an underline on a dark surface, with room for a trailing submit. */
+      underlineInverse:
+        "border-b border-white/30 bg-transparent pr-8 text-sm text-white/80 transition-colors duration-300 ease-in-out placeholder-white/30 focus:border-white/80",
+      /**
+       * The newsletter card: a rounded control on the page background. It is
+       * explicitly white — the page background is slate-50, so `transparent`
+       * would tint it.
+       */
+      pill: "rounded-full border border-border bg-white px-6 text-sm text-foreground transition-colors duration-300 ease-in-out placeholder-foreground/40 focus:border-black",
+    },
+  },
+  defaultVariants: {
+    variant: "underline",
+  },
+});
+
+export type FieldVariant = NonNullable<
+  VariantProps<typeof controlVariants>["variant"]
+>;
+
+type FieldProps = VariantProps<typeof controlVariants> & {
   id: string;
   name: string;
   /** Always required for a11y. Rendered as a visible <label> unless `hideLabel`. */
@@ -21,18 +51,12 @@ type FieldProps = {
   options?: string[];
   value: string;
   onChange: (value: string) => void;
-  /** Skip the shared base control classes and use only `className`. */
-  unstyled?: boolean;
+  /** Layout only — the control's own styling comes from `variant`. */
   className?: string;
   wrapperClassName?: string;
-  labelClassName?: string;
   /** Sibling node rendered after the control (e.g. an absolutely-positioned submit button). */
   trailing?: ReactNode;
 };
-
-const baseControl =
-  "w-full border-b border-border bg-transparent py-3 text-base transition-all outline-none focus:border-primary";
-const placeholderTint = "placeholder:text-muted-foreground/40";
 
 export function Field({
   id,
@@ -48,20 +72,20 @@ export function Field({
   options = [],
   value,
   onChange,
-  unstyled = false,
+  variant,
   className,
   wrapperClassName = "space-y-2",
-  labelClassName = "text-sm font-medium",
   trailing,
 }: FieldProps) {
-  const controlClassName = unstyled
-    ? className
-    : cn(
-        baseControl,
-        as !== "select" && placeholderTint,
-        as === "textarea" && "resize-none",
-        className,
-      );
+  const controlClassName = cn(
+    controlVariants({ variant }),
+    // A select has no placeholder to tint.
+    (variant ?? "underline") === "underline" &&
+      as !== "select" &&
+      "placeholder:text-muted-foreground/40",
+    as === "textarea" && "resize-none",
+    className,
+  );
 
   const shared = {
     id,
@@ -75,7 +99,7 @@ export function Field({
   return (
     <div className={wrapperClassName}>
       {hideLabel ? null : (
-        <label htmlFor={id} className={labelClassName}>
+        <label htmlFor={id} className="text-sm font-medium">
           {label}
         </label>
       )}

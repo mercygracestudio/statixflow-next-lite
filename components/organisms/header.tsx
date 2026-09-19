@@ -1,23 +1,20 @@
 "use client";
 
-import { type MouseEvent, useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSiteMotion } from "../animations/SiteMotionProvider";
-import { useSmoothAnchorClick } from "../animations/SiteAnimations";
 import { useHeaderAnimation } from "../animations/useHeaderAnimation";
-import { ChevronRight } from "lucide-react";
-import { BrandMark } from "@/components/ui/brand-mark";
+import { BrandMark } from "@/components/atoms/brand-mark";
+import { Button } from "@/components/atoms/button";
+import { Eyebrow } from "@/components/atoms/eyebrow";
 import { siteWideContent } from "@/content/site-wide";
 
 const { brand, nav, social, contact, header } = siteWideContent;
 
-export function Header({ showcase = false }: { showcase?: boolean }) {
-  const pathname = usePathname();
+export function Header() {
   const [open, setOpen] = useState(false);
-  const links = showcase ? nav.showcase : nav.primary;
+  const links = nav.primary;
   const { headerRef, smootherRef } = useSiteMotion();
-  const handleSmoothAnchorClick = useSmoothAnchorClick();
 
   useHeaderAnimation(headerRef);
 
@@ -41,13 +38,6 @@ export function Header({ showcase = false }: { showcase?: boolean }) {
   }, [open, smootherRef]);
 
   const openAttribute = open ? { open: true } : {};
-  const handleMobileLinkClick = (
-    event: MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
-    setOpen(false);
-    if (href.startsWith("#")) handleSmoothAnchorClick(event);
-  };
 
   return (
     <>
@@ -59,7 +49,7 @@ export function Header({ showcase = false }: { showcase?: boolean }) {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between rounded-2xl bg-white p-4 shadow-xl sm:py-2">
             <BrandMark
-              href={showcase ? "#" : header.brandHref}
+              href={header.brandHref}
               className={brand.lockup.className}
             >
               {brand.lockup.node}
@@ -68,17 +58,14 @@ export function Header({ showcase = false }: { showcase?: boolean }) {
             <nav
               className="hidden items-center gap-10 text-sm font-medium xl:flex"
               data-desktop-nav=""
-              {...(showcase ? { "data-highlight-on-scroll": "" } : {})}
             >
               {links.map(({ href, label }) => (
                 <a
                   key={href}
                   href={href}
-                  onClick={showcase ? handleSmoothAnchorClick : undefined}
-                  {...(!showcase && pathname === href
-                    ? { "data-active-link": "" }
-                    : {})}
-                  className={`text-foreground transition-colors duration-300 ease-in-out hover:text-foreground/70 data-active-link:text-muted-foreground${showcase ? "data-highlight-on-scroll-active-link:text-muted-foreground" : ""}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground transition-colors duration-300 ease-in-out hover:text-foreground/70"
                 >
                   {label}
                 </a>
@@ -86,30 +73,15 @@ export function Header({ showcase = false }: { showcase?: boolean }) {
             </nav>
 
             <div className="flex items-center gap-6">
-              <a
-                href={
-                  showcase
-                    ? header.purchaseHref
-                    : header.messageHref
-                }
-                className="group hidden items-center justify-center gap-2 rounded-full border border-primary bg-transparent px-4 py-3 text-sm font-medium text-black sm:inline-flex"
-              >
-                <span className="relative overflow-hidden">
-                  <span className="relative block h-full translate-y-0 transition-transform duration-300 ease-in-out group-hover:-translate-y-full">
-                    {showcase
-                      ? header.purchaseLabel
-                      : header.messageLabel}
-                  </span>
-                  <span className="absolute top-0 left-0 block h-full translate-y-full transition-transform duration-300 ease-in-out group-hover:translate-y-0">
-                    {showcase
-                      ? header.purchaseLabel
-                      : header.messageLabel}
-                  </span>
-                </span>
-                <span className="translate-x-0 transition-transform duration-300 ease-in-out group-hover:translate-x-2">
-                  <ChevronRight className="size-4" strokeWidth={1} />
-                </span>
-              </a>
+              <Button
+                href={header.ctaHref}
+                label={header.ctaLabel}
+                variant="outline"
+                size="sm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:inline-flex"
+              />
 
               <button
                 type="button"
@@ -120,9 +92,9 @@ export function Header({ showcase = false }: { showcase?: boolean }) {
                 onClick={() => setOpen((current) => !current)}
                 {...openAttribute}
               >
-                <span className="text-xs font-medium tracking-widest text-foreground uppercase">
+                <Eyebrow as="span" tone="foreground">
                   {header.menuLabel}
-                </span>
+                </Eyebrow>
                 <span className="flex h-3 w-4 flex-col justify-between">
                   <span className="block h-px w-full origin-center bg-current transition-all duration-300 ease-in-out group-open:translate-y-[5.5px] group-open:rotate-45" />
                   <span className="block h-px w-full origin-center bg-current transition-all duration-300 ease-in-out group-open:opacity-0" />
@@ -152,9 +124,9 @@ export function Header({ showcase = false }: { showcase?: boolean }) {
         <div className="flex min-h-0 flex-1 flex-col justify-between overflow-y-auto p-10 md:p-20">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-[180px_1fr] md:gap-10">
             <div>
-              <h2 className="mb-6 text-xs font-medium tracking-widest text-muted-foreground uppercase">
+              <Eyebrow as="h2" className="mb-6">
                 {header.socialHeading}
-              </h2>
+              </Eyebrow>
               <ul className="space-y-4 text-lg sm:space-y-6">
                 {social.links.map(({ icon, label, href }) => (
                   <li key={icon}>
@@ -180,43 +152,43 @@ export function Header({ showcase = false }: { showcase?: boolean }) {
             </div>
 
             <div>
-              <h2 className="mb-6 text-xs font-medium tracking-widest text-muted-foreground uppercase">
+              <Eyebrow as="h2" className="mb-6">
                 {header.menuHeading}
-              </h2>
+              </Eyebrow>
               <ul className="space-y-4 text-lg font-medium sm:space-y-6 md:text-4xl">
                 {links.map(({ href, label }) => (
                   <li key={href}>
                     <a
                       href={href}
-                      onClick={(event) => handleMobileLinkClick(event, href)}
-                      {...(!showcase && pathname === href
-                        ? { "data-active-link": "" }
-                        : {})}
-                      className="transition-opacity duration-300 ease-in-out hover:opacity-70 data-active-link:text-muted-foreground"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setOpen(false)}
+                      className="transition-opacity duration-300 ease-in-out hover:opacity-70"
                     >
                       {label}
                     </a>
                   </li>
                 ))}
-                {!showcase && (
-                  <li>
-                    <a
-                      href={header.messageHref}
-                      onClick={() => setOpen(false)}
-                      className="transition-opacity duration-300 ease-in-out hover:opacity-70 data-active-link:text-muted-foreground"
-                    >
-                      {header.messageLabel}
-                    </a>
-                  </li>
-                )}
+                {/* The desktop CTA is hidden below `sm`, so the drawer carries it there. */}
+                <li>
+                  <a
+                    href={header.ctaHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setOpen(false)}
+                    className="transition-opacity duration-300 ease-in-out hover:opacity-70"
+                  >
+                    {header.ctaLabel}
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
 
           <div className="mt-auto pt-8 md:pt-10">
-            <p className="mb-6 text-xs font-medium tracking-widest text-muted-foreground uppercase">
+            <Eyebrow as="p" className="mb-6">
               {header.getInTouchHeading}
-            </p>
+            </Eyebrow>
             <a
               href={`mailto:${contact.email}`}
               className="text-lg font-medium transition-opacity duration-300 ease-in-out hover:opacity-70"

@@ -1,6 +1,6 @@
 import type { AccordionItem } from "@/content/types";
 import { cn } from "@/lib/cn";
-import { Button } from "../ui/button";
+import { Button } from "../atoms/button";
 import { SectionHeading } from "../molecules/section-heading";
 import { AccordionList } from "../molecules/accordion-list";
 
@@ -12,7 +12,8 @@ type AccordionSectionProps = {
   bordered?: boolean;
   variant?: "light" | "dark";
   /** Extra classes for the heading wrapper, e.g. to centre/narrow it. */
-  headingWrapperClassName?: string;
+  /** `center` narrows the heading column and centres it over the list. */
+  headingAlign?: "start" | "center";
   sideCard?: {
     heading: string;
     body: string;
@@ -28,7 +29,7 @@ export function AccordionSection({
   items,
   bordered = false,
   variant = "light",
-  headingWrapperClassName,
+  headingAlign = "start",
   sideCard,
 }: AccordionSectionProps) {
   // `variant` controls colour only. A dark section with a `sideCard` is not a
@@ -37,7 +38,13 @@ export function AccordionSection({
 
   const content = (
     <div className={cn("py-10 md:pt-20 md:pb-20", bordered && "border-t")}>
-      <div className={cn("mb-8 md:mb-16", headingWrapperClassName)}>
+      <div
+        className={cn(
+          "mb-8 md:mb-16",
+          headingAlign === "center" &&
+            "mx-auto max-w-2xl text-center text-balance",
+        )}
+      >
         <SectionHeading eyebrow={eyebrow} heading={heading} />
       </div>
 
@@ -61,7 +68,9 @@ export function AccordionSection({
             <Button
               href={sideCard.ctaHref}
               label={sideCard.ctaLabel}
-              className="bg-primary px-6 py-3 text-base text-white"
+              {...(sideCard.ctaHref.startsWith("http")
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
             />
           </div>
         ) : null}

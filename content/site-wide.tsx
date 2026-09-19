@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { CtaLink, SocialLink } from "./types";
+import { siteConfig } from "@/site.config";
 
 export interface FooterLinkColumn {
   heading: string;
@@ -42,30 +43,17 @@ export const siteWideContent = {
     crafterName: "Mercy Grace Studio",
     crafterHref: "https://mercygrace.studio/",
   },
+  /**
+   * This lite edition ships a single page, so the nav links into the live demo
+   * of the paid edition rather than to routes that do not exist here.
+   */
   nav: {
     primary: [
-      {
-        href: "https://statixflow-next.mercygrace.studio/home",
-        label: "Home",
-      },
-      {
-        href: "https://statixflow-next.mercygrace.studio/about",
-        label: "About",
-      },
-      {
-        href: "https://statixflow-next.mercygrace.studio/case-studies",
-        label: "Case Studies",
-      },
-      { href: "https://statixflow-next.mercygrace.studio/blog", label: "Blog" },
-      {
-        href: "https://statixflow-next.mercygrace.studio/pricing",
-        label: "Pricing",
-      },
-    ] satisfies CtaLink[],
-    showcase: [
-      { href: "#demos", label: "Demos" },
-      { href: "#features", label: "Features" },
-      { href: "#faqs", label: "FAQs" },
+      { href: `${siteConfig.proSiteUrl}/home/`, label: "Home" },
+      { href: `${siteConfig.proSiteUrl}/about/`, label: "About" },
+      { href: `${siteConfig.proSiteUrl}/case-studies/`, label: "Case Studies" },
+      { href: `${siteConfig.proSiteUrl}/blog/`, label: "Blog" },
+      { href: `${siteConfig.proSiteUrl}/pricing/`, label: "Pricing" },
     ] satisfies CtaLink[],
   },
   social: {
@@ -81,16 +69,10 @@ export const siteWideContent = {
     phone: "+(1) 123 656 7890",
     supportEmail: "help@statixflow.com",
   },
-  buyNow: {
-    label: "Get pro version",
-    href: "https://mercygracestudio.gumroad.com/l/statixflow-next",
-  } satisfies CtaLink,
   header: {
     brandHref: "/",
-    purchaseHref: "https://mercygracestudio.gumroad.com/l/statixflow-next",
-    purchaseLabel: "https://mercygracestudio.gumroad.com/l/statixflow-next",
-    messageHref: "https://mercygracestudio.gumroad.com/l/statixflow-next",
-    messageLabel: "Get pro version",
+    ctaHref: siteConfig.purchaseUrl,
+    ctaLabel: "Get pro version",
     menuLabel: "Menu",
     closeMenuLabel: "Close menu",
     mobileNavLabel: "Mobile navigation",
@@ -107,54 +89,26 @@ export const siteWideContent = {
       {
         heading: "Company",
         links: [
-          {
-            href: "https://mercygracestudio.gumroad.com/l/statixflow-next",
-            label: "Contact Us",
-          },
-          {
-            href: "https://mercygracestudio.gumroad.com/l/statixflow-next",
-            label: "FAQ",
-          },
-          {
-            href: "https://mercygracestudio.gumroad.com/l/statixflow-next",
-            label: "Report A Bug",
-          },
-          {
-            href: "https://mercygracestudio.gumroad.com/l/statixflow-next",
-            label: "Careers",
-          },
-          {
-            href: "https://mercygracestudio.gumroad.com/l/statixflow-next",
-            label: "About Us",
-          },
+          { href: `${siteConfig.proSiteUrl}/contact/`, label: "Contact Us" },
+          { href: "#", label: "FAQ" },
+          { href: "#", label: "Report A Bug" },
+          { href: "#", label: "Careers" },
+          { href: `${siteConfig.proSiteUrl}/about/`, label: "About Us" },
         ],
       },
       {
         heading: "Products",
         links: [
+          { href: "#", label: "Company" },
+          { href: `${siteConfig.proSiteUrl}/contact/`, label: "Contact" },
           {
-            href: "https://mercygracestudio.gumroad.com/l/statixflow-next",
-            label: "Company",
-          },
-          {
-            href: "https://mercygracestudio.gumroad.com/l/statixflow-next",
-            label: "Contact",
-          },
-          {
-            href: "https://mercygracestudio.gumroad.com/l/statixflow-next",
+            href: `${siteConfig.proSiteUrl}/privacy-policy/`,
             label: "Privacy Policy",
           },
           { href: "#", label: "Careers" },
         ],
       },
     ] satisfies FooterLinkColumn[],
-    showcaseLinks: [
-      {
-        href: "https://statixflow-next-docs.mercygrace.studio/",
-        label: "Docs",
-      },
-      { href: "https://mercygrace.studio/support", label: "Help Center" },
-    ] satisfies CtaLink[],
   },
   newsletterForm: {
     emailPlaceholder: "Enter your email address",

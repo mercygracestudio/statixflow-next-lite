@@ -1,12 +1,8 @@
 import Image from "next/image";
 import type { QuoteSlide as QuoteSlideData } from "@/content/types";
-import { Stat } from "../ui/stat";
+import { Stat } from "../atoms/stat";
 
-export function QuoteSection1({
-  slide,
-}: {
-  slide: QuoteSlideData;
-}) {
+export function QuoteSection1({ slide }: { slide: QuoteSlideData }) {
   return (
     <div className="swiper-slide h-auto!">
       <div className="grid h-full grid-rows-[180px_1fr] gap-0 overflow-hidden rounded-b-2xl md:grid-cols-[1fr_240px] md:grid-rows-none md:rounded-l-2xl md:rounded-br-none">
@@ -15,7 +11,6 @@ export function QuoteSection1({
             value={slide.stat.value}
             suffix={slide.stat.suffix}
             label={slide.stat.label}
-            suffixClassName="text-3xl md:text-4xl"
           />
 
           <p className="text-xl leading-relaxed font-medium md:text-2xl">

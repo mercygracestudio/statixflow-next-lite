@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from "react";
 import { ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/atoms/button";
 
 type Props = Omit<
   Extract<ComponentProps<typeof Button>, { href?: undefined }>,
