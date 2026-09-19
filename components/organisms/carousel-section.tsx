@@ -17,7 +17,7 @@ export function CarouselSection({
 }: CarouselSectionProps) {
   return (
     <section className="container mx-auto px-4">
-      <div className="relative space-y-8 py-10 after:absolute after:right-0 after:bottom-0 after:left-0 after:h-px after:bg-border md:space-y-10 md:py-20">
+      <div className="relative space-y-8 pt-10 after:absolute after:right-0 after:bottom-0 after:left-0 after:h-px after:bg-border md:space-y-10 md:pt-20">
         <div className="mx-auto max-w-2xl text-center text-balance">
           <SectionHeading eyebrow={eyebrow} heading={headingParts} />
         </div>
