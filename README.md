@@ -16,12 +16,13 @@ Head to the [documentation](https://statixflow-next-docs.mercygrace.studio/) for
 
 Explore the pro edition here 👉️ [https://statixflow-next.mercygrace.studio/](https://statixflow-next.mercygrace.studio/)
 
-## License and usage terms
+## License
 
-- Distributed under the [GPL license](https://www.gnu.org/licenses/gpl-3.0.html).
-- © 2026 [Mercy Grace Studio](https://mercygrace.studio/). All rights reserved.
-- Free to use in personal and commercial work — just don't republish, redistribute, or resell the template itself.
-- No attribution required, but always welcome.
+StatixFlow Next Lite is released under the [MIT License](LICENSE).
+
+- Free to use, modify, and distribute in personal and commercial projects.
+- No attribution required on your site. Just keep the copyright and license notice in the source code.
+- Want more sections, pages, and features? Check out [StatixFlow Next Pro](https://statixflow-next.mercygrace.studio/).
 
 ## Keep up with updates
 
